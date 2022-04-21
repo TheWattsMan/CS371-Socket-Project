@@ -7,6 +7,7 @@
 import os
 import socket
 import threading
+import subprocess
 
 # IP =  "192.168.1.101" #"localhost"
 IP = "localhost"
@@ -46,6 +47,17 @@ def handle_client (conn,addr):
             conn.send(send_data.encode(FORMAT))
         elif cmd == "HALT":
             quit()
+        elif cmd == "UPLOAD":
+            send_data += "File " + path + fileName + " uploaded."
+            conn.send(send_data.encode(FORMAT))
+        elif cmd == "DOWNLOAD":
+            send_data += "File " + path + fileName + " downloaded."
+            conn.send(send_data.encode(FORMAT))
+        elif cmd == "DIR":
+            lsComm = "ls " + path
+            lsOut = subprocess.check_output(lsComm)
+            send_data += "LS response: " + lsOut.decode("utf-8")
+            conn.send(send_data.encode(FORMAT))
 
 
 
