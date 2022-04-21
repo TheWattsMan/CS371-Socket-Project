@@ -42,6 +42,12 @@ def main():
         elif cmd == "HALT":
             client.send(cmd.encode(FORMAT))
             break
+        elif cmd == "UPLOAD":
+            client.send(cmd.encode(FORMAT))
+        elif cmd == "DOWNLOAD":
+            client.send(cmd.encode(FORMAT))
+        elif cmd == "DIR":
+            client.send(cmd.encode(FORMAT))
 
 
 
