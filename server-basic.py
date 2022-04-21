@@ -54,9 +54,11 @@ def handle_client (conn,addr):
             send_data += "File " + path + fileName + " downloaded."
             conn.send(send_data.encode(FORMAT))
         elif cmd == "DIR":
-            lsComm = "ls " + path
-            lsOut = subprocess.check_output(lsComm)
-            send_data += "LS response: " + lsOut.decode("utf-8")
+            files = os.listdir(path)
+            send_data = "OK@"
+            for file in files:
+                print(file)
+                send_data += file + '\n'
             conn.send(send_data.encode(FORMAT))
 
 
