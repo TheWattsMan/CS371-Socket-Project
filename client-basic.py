@@ -7,7 +7,6 @@
 import os
 import sys
 import socket
-import ipaddress
 
 
 
@@ -19,6 +18,7 @@ FORMAT = "utf-8"
 SERVER_DATA_PATH = "server_data"
     
 def main():
+    client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     while True:
         #get command, only "CONNECT" or "HALT" allowed.
         data = input("> ")
@@ -26,7 +26,6 @@ def main():
         cmd = data[0]
         if cmd.upper() == "CONNECT":
             addr = (data[1],int(data[2]))
-            client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
             client.connect(addr)
         elif cmd.upper() == "HALT":
             sys.exit()
