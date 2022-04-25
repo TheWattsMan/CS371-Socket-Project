@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+# # -*- coding: utf-8 -*-
 
 
 # Author : Ayesha S. Dina
@@ -36,6 +36,8 @@ def handle_client (conn,addr):
         send_data = "OK@"
 
         if cmd == "LOGOUT":
+            send_data += "Logging out."
+            conn.send(send_data.encode(FORMAT))
             break
 
         elif cmd == "CREATE": 
@@ -45,6 +47,8 @@ def handle_client (conn,addr):
 
             conn.send(send_data.encode(FORMAT))
         elif cmd == "HALT":
+            send_data += "Server halting."
+            conn.send(send_data.encode(FORMAT))
             quit()
         elif cmd == "UPLOAD":
             send_data += "File " + path + fileName + " uploaded."

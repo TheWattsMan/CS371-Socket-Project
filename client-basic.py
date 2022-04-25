@@ -16,6 +16,7 @@ ADDR = (IP,PORT)
 SIZE = 1024 ## byte .. buffer size
 FORMAT = "utf-8"
 SERVER_DATA_PATH = "server_data"
+SEPARATOR = "<SEPARATOR>"
 isConnected = False
 
 def main():
@@ -48,6 +49,7 @@ def main():
                 print(f"{msg}")
             elif cmd.upper()  == "DISCONNECTED":
                 print(f"{msg}")
+                isConnected = False
                 break
             
             data = input("> ") 
@@ -67,7 +69,17 @@ def main():
                 client.send(cmd.encode(FORMAT))
                 break
             elif cmd.upper()  == "UPLOAD":
+                cmd = cmd.upper()
                 client.send(cmd.encode(FORMAT))
+                fName = data[1]
+                fSize = os.path.getsize(fName)
+                client.send(str(fSize).encode(FORMAT))
+
+                with open(fName, 'rb') as fs:
+                    data = fs.read(SIZE)
+                    while data:
+                        client.send(data)
+                        data = fs.read(SIZE)
             elif cmd.upper()  == "DOWNLOAD":
                 client.send(cmd.encode(FORMAT))
             elif cmd.upper()  == "DIR":
